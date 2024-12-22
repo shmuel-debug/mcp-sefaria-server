@@ -1,42 +1,29 @@
-# Jewish Library MCP Server
+# Sefaria Jewish Library MCP Server
 
-An MCP (Model Context Protocol) server that provides powerful search capabilities for Jewish texts and literature. This server enables Large Language Models to search and reference Jewish texts through a standardized interface.
+An MCP (Model Context Protocol) server that provides access to Jewish texts from the Sefaria library. This server enables Large Language Models to retrieve and reference Jewish texts through a standardized interface.
 
 ## Features
 
-- Full-text search across Jewish texts and literature
-- Advanced query syntax support:
-  - Field-specific search (text:term, reference:term, topics:term)
-  - Boolean operators (AND, OR)
-  - Required/excluded terms (+term, -term)
-  - Phrase search ('exact phrase')
-  - Wildcards (?, *)
-- Relevance-based scoring
-- Rich search results including references, topics, and highlighted excerpts
+- Retrieve Jewish texts by reference
+- Retrieve commentaries on a given text
 
 ## Installation
 
 Requires Python 3.10 or higher.
 
-
 ### Clone the repository
 ```bash
-git clone https://github.com/yourusername/mcp-otzaria-server.git
-cd mcp-otzaria-server
+git clone https://github.com/sivan22/mcp-sefaria-server.git
+cd mcp-sefaria-server
 ```
-### Get the index
-download and extract the index from [here](https://drive.google.com/file/d/1lpbBCPimwcNfC0VZOlQueA4SHNGIp5_t/view?usp=drive_link)
 
-### Install dependencies
-```
-pip install .
-```
+
 ## Running the Server
 
 The server can be run directly:
 
 ```bash
-uv --directory path/to/directory run jewish_library
+uv --directory path/to/directory run sefaria_jewish_library
 ```
 
 Or through an MCP client that supports the Model Context Protocol.
@@ -44,13 +31,13 @@ for claude desktop app and cline you should use the following config:
 ```
 {
   "mcpServers": {        
-      "jewish_library": {
+      "sefaria_jewish_library": {
           "command": "uv",
           "args": [
               "--directory",
-              "C:/dev/mcp-otzaria-server",
+              "C:/dev/mcp-sefaria-server",
               "run",
-              "jewish_library"
+              "sefaria_jewish_library"
           ],
           "env": {
             "PYTHONIOENCODING": "utf-8" 
@@ -62,51 +49,41 @@ for claude desktop app and cline you should use the following config:
 
 ## Available tools
 
-The server provides a single tool through the MCP interface:
+The server provides the following tools through the MCP interface:
 
-### full_text_search
+### get_text
 
-Performs a full-text search across the Jewish library with advanced query capabilities.
+Retrieves a specific Jewish text by its reference.
 
-Example query formats:
+Example:
 ```
-# Basic search
-"maimonides on prayer"
-
-# Field-specific search
-text:"love your neighbor" AND topics:mitzvot
-
-# Required terms
-+shabbat +candles
-
-# Phrase search with topic filter
-"four species" AND topics:sukkot
-
-# Wildcard search
-pray* AND reference:psalms
+reference: "Genesis 1:1"
+reference: "שמות פרק ב פסוק ג"
+reference: "משנה ברכות פרק א משנה א"
 ```
 
-Search results include:
-- Reference information
-- Relevant topics
-- Highlighted excerpts showing query matches
-- Relevance score
+### get_commentaries
+
+Retrieves a list of commentaries for a given text.
+
+Example:
+```
+reference: "Genesis 1:1"
+reference: "שמות פרק ב פסוק ג"
+reference: "משנה ברכות פרק א משנה א"
+```
 
 ## Development
 
 This project uses:
 - [MCP SDK](https://github.com/modelcontextprotocol/sdk) for server implementation
-- [Tantivy](https://github.com/quickwit-oss/tantivy) for full-text search capabilities
-
-
-
-
+- [Sefaria API](https://github.com/Sefaria/Sefaria-API) for accessing Jewish texts
 
 ## Requirements
 
 - Python >= 3.10
 - MCP SDK >= 1.1.1
-- Tantivy search engine
+- Sefaria API
 
 ## License
 
