@@ -1,0 +1,36 @@
+2024-12-22 22:39:02,761 - sefaria_jewish_library - ERROR - retreive commentaries error: cannot access local variable 'reference' where it is not associated with a value
+Traceback (most recent call last):
+  File "C:\dev\mcp-sefaria-server\src\sefaria_jewish_library\server.py", line 106, in handle_call_tool
+    if not reference:
+           ^^^^^^^^^
+UnboundLocalError: cannot access local variable 'reference' where it is not associated with a value
+2024-12-22 22:45:13,577 - sefaria_jewish_library - ERROR - Tool execution error: Unknown tool: get_text
+Traceback (most recent call last):
+  File "C:\dev\mcp-sefaria-server\src\sefaria_jewish_library\server.py", line 123, in handle_call_tool
+    raise ValueError(f"Unknown tool: {name}")
+ValueError: Unknown tool: get_text
+2024-12-22 22:45:22,831 - sefaria_jewish_library - ERROR - Tool execution error: Unknown tool: get_text
+Traceback (most recent call last):
+  File "C:\dev\mcp-sefaria-server\src\sefaria_jewish_library\server.py", line 123, in handle_call_tool
+    raise ValueError(f"Unknown tool: {name}")
+ValueError: Unknown tool: get_text
+2024-12-22 22:46:35,202 - sefaria_jewish_library - ERROR - Tool execution error: Unknown tool: get_text
+Traceback (most recent call last):
+  File "C:\dev\mcp-sefaria-server\src\sefaria_jewish_library\server.py", line 123, in handle_call_tool
+    raise ValueError(f"Unknown tool: {name}")
+ValueError: Unknown tool: get_text
+2024-12-22 22:50:41,639 - sefaria_jewish_library - ERROR - retreive text error: 1 validation error for TextContent
+text
+  Input should be a valid string [type=string_type, input_value=(None, None), input_type=tuple]
+    For further information visit https://errors.pydantic.dev/2.10/v/string_type
+Traceback (most recent call last):
+  File "C:\dev\mcp-sefaria-server\src\sefaria_jewish_library\server.py", line 90, in handle_call_tool
+    return [types.TextContent(
+            ^^^^^^^^^^^^^^^^^^
+  File "C:\dev\mcp-sefaria-server\.venv\Lib\site-packages\pydantic\main.py", line 214, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pydantic_core._pydantic_core.ValidationError: 1 validation error for TextContent
+text
+  Input should be a valid string [type=string_type, input_value=(None, None), input_type=tuple]
+    For further information visit https://errors.pydantic.dev/2.10/v/string_type
