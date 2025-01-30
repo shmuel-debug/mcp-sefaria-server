@@ -1,5 +1,6 @@
 # Sefaria Jewish Library MCP Server
 
+[![smithery badge](https://smithery.ai/badge/mcp-sefaria-server)](https://smithery.ai/server/mcp-sefaria-server)
 An MCP (Model Context Protocol) server that provides access to Jewish texts from the Sefaria library. This server enables Large Language Models to retrieve and reference Jewish texts through a standardized interface.
 
 <a href="https://glama.ai/mcp/servers/j3v6vnp4xk"><img width="380" height="200" src="https://glama.ai/mcp/servers/j3v6vnp4xk/badge" alt="Sefaria Jewish Library Server MCP server" /></a>
@@ -12,6 +13,14 @@ An MCP (Model Context Protocol) server that provides access to Jewish texts from
 ## Installation
 
 Requires Python 3.10 or higher.
+
+### Installing via Smithery
+
+To install Sefaria Jewish Library for Claude Desktop automatically via [Smithery](https://smithery.ai/server/mcp-sefaria-server):
+
+```bash
+npx -y @smithery/cli install mcp-sefaria-server --client claude
+```
 
 ### Clone the repository
 ```bash
