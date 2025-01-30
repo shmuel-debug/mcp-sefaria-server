@@ -1,6 +1,6 @@
 import requests
 
-SEFARIA_API_BASE_URL = "http://localhost:8000"
+SEFARIA_API_BASE_URL = "https://sefaria.org"
 
 def get_request_json_data(endpoint, ref=None, param=None):
     """
