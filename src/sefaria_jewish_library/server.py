@@ -20,7 +20,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger('sefaria_jewish_library')
 
-SEFARIA_API_URL = "http://localhost:8000"
+SEFARIA_API_URL = "https://sefaria.org"
 
 
 server = Server("sefaria_jewish_library")
