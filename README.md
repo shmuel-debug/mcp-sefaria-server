@@ -46,7 +46,7 @@ for claude desktop app and cline you should use the following config:
           "command": "uv",
           "args": [
               "--directory",
-              "C:/dev/mcp-sefaria-server",
+              "absolute/path/to/mcp-sefaria-server",
               "run",
               "sefaria_jewish_library"
           ],
