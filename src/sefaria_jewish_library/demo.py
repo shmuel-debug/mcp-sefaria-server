@@ -7,7 +7,7 @@ import asyncio
 import os
 
 async def print_search   ():
-    results = await get_commentaries("Genesis 1:1")
+    results = await search_texts( "לכשאפנה אשנה")
     
     print(results)
     

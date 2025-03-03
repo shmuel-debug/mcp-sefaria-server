@@ -9,6 +9,7 @@ uv.lock
 
 # Virtual environments
 .venv
+venv
 
 # Tantivy index
 index

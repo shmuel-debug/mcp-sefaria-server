@@ -1,4 +1,5 @@
 import requests
+import json
 
 SEFARIA_API_BASE_URL = "https://sefaria.org"
 
@@ -109,3 +110,99 @@ async def get_text(reference: str) -> str:
     Retrieves the text for a given reference.
     """
     return str(get_hebrew_text(reference))
+
+async def search_texts(query: str, slop: int =2, filters=None, size=10):
+    """
+    Search for texts in the Sefaria library.
+    
+    Args:
+        query (str): The search query
+        slop (int, optional): The maximum distance between each query word in the resulting document. 0 means an exact match must be found. defaults to 2
+        filters (list, optional): Filters to apply to the text path in English (Examples: "Shulkhan Arukh", "maimonides", "talmud").
+        size (int, optional): Number of results to return. defaults to 10.
+        
+    Returns:
+        str: Formatted search results
+    """
+    # Use the www subdomain as specified in the documentation
+    url = "https://www.sefaria.org/api/search-wrapper"
+    
+    # Build the request payload
+    payload = {
+        "query": query,
+        "type": "text",
+        "field":  "naive_lemmatizer",
+        "size": size,
+  "source_proj": True,
+        "sort_fields": [
+    "pagesheetrank"
+  ],
+  "sort_method": "score",
+        "slop": slop,
+     
+    }
+    if filters:
+        payload["filters"] = filters
+
+    
+    # Make the POST request
+    try:
+        response = requests.post(url, json=payload)
+        response.raise_for_status()
+        
+        # Parse JSON response
+        data = response.json()
+        
+        print(data)
+        
+        # Format the results
+        results = []
+        
+        # Check if we have hits in the response
+        if "hits" in data and "hits" in data["hits"]:
+            # Get the actual total hits count
+            total_hits = data["hits"].get("total", 0)
+            # Handle different response formats
+            if isinstance(total_hits, dict) and "value" in total_hits:
+                total_hits = total_hits["value"]
+         
+            # Process each hit
+            for hit in data["hits"]["hits"]:
+                ref = hit["_source"]["ref"]
+                heRef = hit["_source"]["heRef"]
+                
+                # Get the content snippet
+                text_snippet = ""
+                
+                # Get highlighted text if available (this contains the search term highlighted)
+                if "highlight" in hit:
+                    for field_name, highlights in hit["highlight"].items():
+                        if highlights and len(highlights) > 0:
+                            # Join multiple highlights with ellipses
+                            text_snippet = " [...] ".join(highlights)
+                            break
+                
+                # If no highlight, use content from the source
+                if not text_snippet:
+                    # Try different fields that might contain content
+                    for field_name in ["naive_lemmatizer", "exact"]:
+                        if field_name in source and source[field_name]:
+                            content = source[field_name]
+                            if isinstance(content, str):
+                                # Limit to a reasonable snippet length
+                                text_snippet = content[:300] + ("..." if len(content) > 300 else "")
+                                break
+             
+                # Add the formatted result
+                results.append(f"Reference: {ref}\n Hebrew Reference: {heRef}\n Highlight: {text_snippet}\n")
+        
+        # Return a message if no results were found
+        if len(results) <= 1:
+            return f"No results found for '{query}'."
+        
+        return "\n".join(results)
+    
+    except json.JSONDecodeError as e:
+        return f"Error: Failed to parse JSON response: {str(e)}"
+    except requests.exceptions.RequestException as e:
+        return f"Error during search API request: {str(e)}"

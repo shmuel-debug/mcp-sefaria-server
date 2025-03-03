@@ -61,6 +61,37 @@ async def handle_list_tools() -> list[types.Tool]:
                 "required": ["reference"],
             },
         ),
+        types.Tool(
+            name="search_texts",
+            description="search for jewish texts in the Sefaria library",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "query": {
+                        "type": "string",
+                        "description": "The search query",
+                    },
+                    "slop":{
+                        "type": "integer",
+                        "description": "The maximum distance between each query word in the resulting document. 0 means an exact match must be found.",
+                        "default": 2
+                    },
+                 
+                    "filters":{
+                        "type": "list",
+                        "description": 'Filters to apply to the text path in English (Examples: "Shulkhan Arukh", "maimonides", "talmud").',
+                        "default" : "[]"
+
+                    },                        
+                    "size": {
+                        "type": "integer",
+                        "description": "Number of results to return.",
+                        "default": 10
+                    }
+                },
+                "required": ["query"],
+            },
+        ),
     ]
 
 @server.call_tool()
@@ -114,6 +145,36 @@ async def handle_call_tool(
                 )]
             except Exception as err:
                 logger.error(f"retreive commentaries error: {err}", exc_info=True)
+                return [types.TextContent(
+                    type="text",
+                    text=f"Error: {str(err)}"
+                )]
+        
+        elif name == "search_texts":
+            try:
+                query = arguments.get("query")
+                if not query:
+                    raise ValueError("Missing query parameter")
+                    
+                slop = arguments.get("slop")
+                if not slop : # Use 'is None' to distinguish between explicitly provided null and missing key
+                    slop = 2
+                filters = arguments.get("filters")
+                if not filters:
+                    filters = None
+                size = arguments.get("size")
+                if not size:
+                    size = 10
+                
+                logger.debug(f"handle_search_texts: {query}")
+                results = await search_texts(query, slop, filters, size)
+                
+                return [types.TextContent(
+                    type="text",
+                    text=results
+                )]
+            except Exception as err:
+                logger.error(f"search texts error: {err}", exc_info=True)
                 return [types.TextContent(
                     type="text",
                     text=f"Error: {str(err)}"
