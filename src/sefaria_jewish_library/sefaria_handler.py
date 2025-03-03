@@ -1,5 +1,6 @@
 import requests
 import json
+import logging
 
 SEFARIA_API_BASE_URL = "https://sefaria.org"
 
@@ -150,6 +151,8 @@ async def search_texts(query: str, slop: int =2, filters=None, size=10):
         response = requests.post(url, json=payload)
         response.raise_for_status()
         
+        logging.debug(f"Sefaria's Search API response: {response.text}")
+        
         # Parse JSON response
         data = response.json()
         
@@ -199,7 +202,7 @@ async def search_texts(query: str, slop: int =2, filters=None, size=10):
         # Return a message if no results were found
         if len(results) <= 1:
             return f"No results found for '{query}'."
-        
+        logging.debug(f"formated results: {results}")
         return "\n".join(results)
     
     except json.JSONDecodeError as e:

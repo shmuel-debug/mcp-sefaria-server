@@ -7,7 +7,7 @@ import asyncio
 import os
 
 async def print_search   ():
-    results = await search_texts( "לכשאפנה אשנה")
+    results = await search_texts( "גזל גוי")
     
     print(results)
     

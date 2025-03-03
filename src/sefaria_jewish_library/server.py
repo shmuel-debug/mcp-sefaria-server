@@ -11,7 +11,7 @@ from .sefaria_handler import *
 
 # Configure logging
 logging.basicConfig(
-    level=logging.ERROR,
+    level=logging.DEBUG,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
         logging.StreamHandler(sys.stderr),
@@ -136,6 +136,7 @@ async def handle_call_tool(
                 reference = arguments.get("reference")
                 if not reference:
                     raise ValueError("Missing  parameter")
+                
                 logger.debug(f"handle_get_commentaries: {reference}")
                 commentaries = await get_commentaries(reference)
                 
