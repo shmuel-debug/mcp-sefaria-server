@@ -107,6 +107,8 @@ size: 5
 This project uses:
 - [MCP SDK](https://github.com/modelcontextprotocol/sdk) for server implementation
 - [Sefaria API](https://github.com/Sefaria/Sefaria-API) for accessing Jewish texts
+
+  
 ![image](https://github.com/user-attachments/assets/14ee8826-a76e-4c57-801d-473b177416d3)
 
 ## Requirements
