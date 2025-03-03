@@ -2,6 +2,9 @@
 
 [![smithery badge](https://smithery.ai/badge/mcp-sefaria-server)](https://smithery.ai/server/mcp-sefaria-server)
 
+
+
+
 An MCP (Model Context Protocol) server that provides access to Jewish texts from the [Sefaria](https://www.sefaria.org/) library. This server enables Large Language Models to retrieve and reference Jewish texts through a standardized interface.
 
 <a href="https://glama.ai/mcp/servers/j3v6vnp4xk"><img width="380" height="200" src="https://glama.ai/mcp/servers/j3v6vnp4xk/badge" alt="Sefaria Jewish Library Server MCP server" /></a>
@@ -104,6 +107,7 @@ size: 5
 This project uses:
 - [MCP SDK](https://github.com/modelcontextprotocol/sdk) for server implementation
 - [Sefaria API](https://github.com/Sefaria/Sefaria-API) for accessing Jewish texts
+![image](https://github.com/user-attachments/assets/14ee8826-a76e-4c57-801d-473b177416d3)
 
 ## Requirements
 
