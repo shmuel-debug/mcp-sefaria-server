@@ -10,18 +10,11 @@ An MCP (Model Context Protocol) server that provides access to Jewish texts from
 
 - Retrieve Jewish texts by reference
 - Retrieve commentaries on a given text
+- Search the Jewish library for a query
 
 ## Installation
 
 Requires Python 3.10 or higher.
-
-### Installing via Smithery
-
-To install Sefaria Jewish Library for Claude Desktop automatically via [Smithery](https://smithery.ai/server/mcp-sefaria-server):
-
-```bash
-npx -y @smithery/cli install mcp-sefaria-server --client claude
-```
 
 ### Clone the repository
 ```bash
@@ -30,7 +23,7 @@ cd mcp-sefaria-server
 ```
 
 
-## Running the Server
+### Running the Server
 
 The server can be run directly:
 
@@ -57,6 +50,14 @@ for claude desktop app and cline you should use the following config:
       }
   }
 }
+```
+
+### Installing via Smithery
+
+To install Sefaria Jewish Library for Claude Desktop automatically via [Smithery](https://smithery.ai/server/mcp-sefaria-server):
+
+```bash
+npx -y @smithery/cli install mcp-sefaria-server --client claude
 ```
 
 ## Available tools
