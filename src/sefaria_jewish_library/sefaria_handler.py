@@ -171,8 +171,9 @@ async def search_texts(query: str, slop: int =2, filters=None, size=10):
          
             # Process each hit
             for hit in data["hits"]["hits"]:
-                ref = hit["_source"]["ref"]
-                heRef = hit["_source"]["heRef"]
+                source = hit["_source"]
+                ref = source["ref"]
+                heRef = source["heRef"]
                 
                 # Get the content snippet
                 text_snippet = ""
