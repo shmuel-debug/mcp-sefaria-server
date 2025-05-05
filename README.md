@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/sivan22-mcp-sefaria-server-badge.png)](https://mseep.ai/app/sivan22-mcp-sefaria-server)
+
 # Sefaria Jewish Library MCP Server
 
 [![smithery badge](https://smithery.ai/badge/mcp-sefaria-server)](https://smithery.ai/server/mcp-sefaria-server)
