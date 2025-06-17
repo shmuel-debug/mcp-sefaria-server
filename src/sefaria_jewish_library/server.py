@@ -92,6 +92,41 @@ async def handle_list_tools() -> list[types.Tool]:
                 "required": ["query"],
             },
         ),
+        types.Tool(
+            name="get_daily_learnings",
+            description="get the daily or weekly learning schedule from Sefaria's calendar",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "diaspora": {
+                        "type": "boolean",
+                        "description": "When true, returns weekly Torah reading for diaspora. When false, returns Torah reading for Israel.",
+                        "default": True
+                    },
+                    "custom": {
+                        "type": "string",
+                        "description": "If available, the weekly Haftarah will be returned for the selected custom."
+                    },
+                    "year": {
+                        "type": "integer",
+                        "description": "Year for the date. Must be used with month and day, or API falls back to current date."
+                    },
+                    "month": {
+                        "type": "integer",
+                        "description": "Month for the date. Must be used with year and day, or API falls back to current date."
+                    },
+                    "day": {
+                        "type": "integer",
+                        "description": "Day for the date. Must be used with year and month, or API falls back to current date."
+                    },
+                    "timezone": {
+                        "type": "string",
+                        "description": "Timezone name in accordance with IANA Standards. Defaults to client's timezone if not specified."
+                    }
+                },
+                "required": [],
+            },
+        ),
     ]
 
 @server.call_tool()
@@ -105,8 +140,8 @@ async def handle_call_tool(
     logger.debug(f"Handling call_tool request for {name} with arguments {arguments}")
     
     try:
-        if not arguments:
-            raise ValueError("Missing arguments")
+        if arguments is None:
+            arguments = {}
     
         if name == "get_text":
             try:
@@ -176,6 +211,29 @@ async def handle_call_tool(
                 )]
             except Exception as err:
                 logger.error(f"search texts error: {err}", exc_info=True)
+                return [types.TextContent(
+                    type="text",
+                    text=f"Error: {str(err)}"
+                )]
+        
+        elif name == "get_daily_learnings":
+            try:
+                diaspora = arguments.get("diaspora", True)
+                custom = arguments.get("custom")
+                year = arguments.get("year")
+                month = arguments.get("month")
+                day = arguments.get("day")
+                timezone = arguments.get("timezone")
+                
+                logger.debug(f"handle_get_daily_learnings: diaspora={diaspora}, year={year}, month={month}, day={day}")
+                results = await get_daily_learnings(diaspora, custom, year, month, day, timezone)
+                
+                return [types.TextContent(
+                    type="text",
+                    text=results
+                )]
+            except Exception as err:
+                logger.error(f"get daily learnings error: {err}", exc_info=True)
                 return [types.TextContent(
                     type="text",
                     text=f"Error: {str(err)}"

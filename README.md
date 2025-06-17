@@ -16,6 +16,7 @@ An MCP ([Model Context Protocol](https://docs.anthropic.com/en/docs/agents-and-t
 - Retrieve Jewish texts by reference
 - Retrieve commentaries on a given text
 - Search the Jewish library for a query
+- Get daily/weekly learning schedule from Sefaria's calendar
 
 ## Installation
 
@@ -102,6 +103,38 @@ slop: 1
 filters: ["Talmud", "Bavli"]
 size: 5
 ```
+
+### get_daily_learnings
+
+Retrieves the daily or weekly learning schedule from Sefaria's calendar API.
+
+Parameters (all optional):
+- `diaspora` (boolean): When true, returns weekly Torah reading for diaspora. When false, returns Torah reading for Israel. Default: true
+- `custom` (string): If available, the weekly Haftarah will be returned for the selected custom
+- `year`, `month`, `day` (integers): Specific date (all three must be used together, or API falls back to current date)
+- `timezone` (string): Timezone name in accordance with IANA Standards
+
+Example:
+```
+# Get current day's learning schedule
+{}
+
+# Get learning schedule for a specific date in Israel
+{
+  "diaspora": false,
+  "year": 2024,
+  "month": 12,
+  "day": 25,
+  "timezone": "Asia/Jerusalem"
+}
+```
+
+Returns a formatted schedule including:
+- Weekly Torah portion (Parashat Hashavua) with aliyot
+- Haftarah reading
+- Daf Yomi (daily Talmud page)
+- Daily Mishnah, Rambam, and other learning cycles
+- Various Jewish learning programs and their daily selections
 
 
 ## Development
