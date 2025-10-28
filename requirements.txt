@@ -1,0 +1,4 @@
+mcp_sdk>=1.1.1
+fastapi
+uvicorn
+requests
