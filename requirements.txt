@@ -1,4 +1,4 @@
-mcp_sdk>=1.1.1
+git+https://github.com/smithery-dev/mcp_sdk.git
 fastapi
 uvicorn
 requests
