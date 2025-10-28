@@ -1,4 +1,4 @@
-https://github.com/smithery-dev/mcp_sdk/archive/refs/heads/master.zip
+git+https://github.com/smithery-dev/mcp_sdk.git
 fastapi
 uvicorn
 requests
